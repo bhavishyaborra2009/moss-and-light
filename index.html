@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f2e9">
+    <meta name="description" content="Moss & Light is a calm place to find visual inspiration.">
+    <title>Moss &amp; Light — Find your next view</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Moss and Light home">
+        <span class="brand-mark" aria-hidden="true">M<span>&amp;</span>L</span>
+        <span class="brand-name">Moss <span>&amp;</span> Light</span>
+      </a>
+      <p class="header-note">A field guide for curious eyes</p>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">A little inspiration, gathered</p>
+        <h1 id="page-title">Find your next <em>view.</em></h1>
+        <p class="intro-copy">Search the world for images that make you pause, wonder, and look a little closer.</p>
+      </section>
+
+      <section class="search-panel" aria-label="Image search">
+        <label for="search-input">What are you looking for?</label>
+        <div class="search-row">
+          <div class="input-wrap">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input id="search-input" name="query" type="search" placeholder="Try “misty mountain mornings”" autocomplete="off">
+          </div>
+          <button id="search-button" class="search-button" type="button">Search <span aria-hidden="true">↗</span></button>
+        </div>
+        <div class="quick-picks" aria-label="Suggested searches">
+          <span class="quick-picks-label">A few starting points</span>
+          <button class="chip" type="button">Wild gardens</button>
+          <button class="chip" type="button">Quiet coastlines</button>
+          <button class="chip" type="button">Cabin light</button>
+          <button class="chip" type="button">Desert blooms</button>
+        </div>
+      </section>
+
+      <section class="results-section" aria-labelledby="results-heading">
+        <div class="results-heading-row">
+          <div>
+            <p class="eyebrow">Your collection</p>
+            <h2 id="results-heading">The good stuff</h2>
+          </div>
+          <p id="result-count" class="result-count">Your finds will appear here</p>
+        </div>
+        <div id="results" class="results-grid" aria-live="polite"></div>
+        <div class="empty-state" aria-live="polite">
+          <span class="empty-state-icon" aria-hidden="true">✳</span>
+          <p class="empty-state-title">A blank page, full of possibility.</p>
+          <p>Enter a subject above and your visual field guide will begin here.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Moss &amp; Light</span>
+      <span>Made for the art of looking</span>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
