@@ -24,23 +24,23 @@
         <p class="intro-copy">Search the world for images that make you pause, wonder, and look a little closer.</p>
       </section>
 
-      <section class="search-panel" aria-label="Image search">
+      <form id="search-form" class="search-panel" aria-label="Image search">
         <label for="search-input">What are you looking for?</label>
         <div class="search-row">
           <div class="input-wrap">
             <span class="search-icon" aria-hidden="true">⌕</span>
             <input id="search-input" name="query" type="search" placeholder="Try “misty mountain mornings”" autocomplete="off">
           </div>
-          <button id="search-button" class="search-button" type="button">Search <span aria-hidden="true">↗</span></button>
+          <button id="search-button" class="search-button" type="submit">Search <span aria-hidden="true">↗</span></button>
         </div>
         <div class="quick-picks" aria-label="Suggested searches">
           <span class="quick-picks-label">A few starting points</span>
-          <button class="chip" type="button">Wild gardens</button>
-          <button class="chip" type="button">Quiet coastlines</button>
-          <button class="chip" type="button">Cabin light</button>
-          <button class="chip" type="button">Desert blooms</button>
+          <button class="chip" type="button" data-query="Wild gardens">Wild gardens</button>
+          <button class="chip" type="button" data-query="Quiet coastlines">Quiet coastlines</button>
+          <button class="chip" type="button" data-query="Cabin light">Cabin light</button>
+          <button class="chip" type="button" data-query="Desert blooms">Desert blooms</button>
         </div>
-      </section>
+      </form>
 
       <section class="results-section" aria-labelledby="results-heading">
         <div class="results-heading-row">
