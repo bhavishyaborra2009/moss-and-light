@@ -50,11 +50,14 @@
           </div>
           <p id="result-count" class="result-count">Your finds will appear here</p>
         </div>
-        <div id="results" class="results-grid" aria-live="polite"></div>
-        <div class="empty-state" aria-live="polite">
-          <span class="empty-state-icon" aria-hidden="true">✳</span>
-          <p class="empty-state-title">A blank page, full of possibility.</p>
-          <p>Enter a subject above and your visual field guide will begin here.</p>
+        <div id="results" class="results-grid" aria-live="polite" aria-busy="false"></div>
+        <div class="empty-state" id="empty-state" role="status" aria-live="polite" aria-atomic="true">
+          <span class="empty-state-icon" aria-hidden="true">
+            <span id="state-symbol">✳</span>
+            <span class="loading-spinner"></span>
+          </span>
+          <p class="empty-state-title" id="state-title">A blank page, full of possibility.</p>
+          <p id="state-message">Enter a subject above and your visual field guide will begin here.</p>
         </div>
       </section>
     </main>

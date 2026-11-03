@@ -3,6 +3,19 @@ const searchInput = document.getElementById("search-input");
 const results = document.getElementById("results");
 const resultCount = document.getElementById("result-count");
 const emptyState = document.querySelector(".empty-state");
+const stateSymbol = document.getElementById("state-symbol");
+const stateTitle = document.getElementById("state-title");
+const stateMessage = document.getElementById("state-message");
+const searchButton = document.getElementById("search-button");
+let activeSearchController;
+
+function showFeedback(state, title, message, symbol = "✳") {
+  emptyState.className = `empty-state${state ? ` state-${state}` : ""}`;
+  stateSymbol.textContent = symbol;
+  stateTitle.textContent = title;
+  stateMessage.textContent = message;
+  emptyState.hidden = false;
+}
 
 searchForm.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -12,19 +25,27 @@ searchForm.addEventListener("submit", async (event) => {
     return;
   }
 
+  activeSearchController?.abort();
+  const controller = new AbortController();
+  activeSearchController = controller;
   results.innerHTML = "";
-  emptyState.hidden = false;
+  results.setAttribute("aria-busy", "true");
+  searchButton.disabled = true;
+  showFeedback("loading", "Searching…", `Looking for images of “${query}”.`);
   resultCount.textContent = `Searching Wikimedia Commons for “${query}”…`;
 
   const url = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}%20filetype%3Abitmap&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url&iiurlwidth=800&format=json&origin=*`;
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { signal: controller.signal });
     if (!response.ok) {
       throw new Error(`Image search failed with status ${response.status}`);
     }
 
     const data = await response.json();
+    if (data.error) {
+      throw new Error(data.error.info ?? "The image search service returned an error");
+    }
     const pages = Object.values(data.query?.pages ?? {});
 
     for (const page of pages) {
@@ -59,13 +80,26 @@ searchForm.addEventListener("submit", async (event) => {
       results.appendChild(card);
     }
 
-    emptyState.hidden = pages.length > 0;
-    resultCount.textContent = pages.length
-      ? `Showing ${pages.length} results for “${query}”`
-      : `No images found for “${query}”`;
+    if (pages.length) {
+      emptyState.hidden = true;
+      resultCount.textContent = `Showing ${pages.length} results for “${query}”`;
+    } else {
+      showFeedback("empty", "No images found.", `No results for “${query}”. Try another search.`);
+      resultCount.textContent = `No results for “${query}”`;
+    }
   } catch (error) {
+    if (error.name === "AbortError") {
+      return;
+    }
     console.error(error);
+    showFeedback("error", "We couldn't load those images.", "Something went wrong. Please check your connection and try again.", "!");
     resultCount.textContent = "Could not load images. Please try again.";
+  } finally {
+    if (activeSearchController === controller) {
+      activeSearchController = undefined;
+      searchButton.disabled = false;
+      results.setAttribute("aria-busy", "false");
+    }
   }
 });
 
