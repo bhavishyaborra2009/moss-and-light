@@ -220,6 +220,11 @@ h1 em {
   transform: translateY(-1px);
 }
 
+.search-button:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
 .search-button:focus-visible,
 .chip:focus-visible {
   outline: 3px solid #a06d42;
@@ -293,6 +298,56 @@ h2 {
   gap: 1rem;
 }
 
+.result-card {
+  overflow: hidden;
+  align-self: start;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--white);
+  box-shadow: 0 8px 24px rgba(48, 62, 49, 0.06);
+  animation: card-appear 420ms ease both;
+}
+
+@keyframes card-appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-image-link {
+  display: block;
+  overflow: hidden;
+  background: var(--paper-deep);
+}
+
+.result-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform 220ms ease;
+}
+
+.result-image-link:hover .result-image {
+  transform: scale(1.03);
+}
+
+.result-title {
+  overflow: hidden;
+  margin: 0;
+  padding: 0.8rem 0.9rem;
+  color: var(--ink);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .empty-state {
   display: flex;
   min-height: 225px;
@@ -306,6 +361,10 @@ h2 {
   pointer-events: none;
 }
 
+.empty-state[hidden] {
+  display: none;
+}
+
 .empty-state-icon {
   display: grid;
   width: 42px;
@@ -316,6 +375,34 @@ h2 {
   border-radius: 50%;
   color: #8a6746;
   font-size: 1.1rem;
+}
+
+.loading-spinner {
+  display: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d5ddcf;
+  border-top-color: var(--forest);
+  border-radius: 50%;
+}
+
+.empty-state.state-loading .empty-state-icon {
+  color: var(--forest);
+}
+
+.empty-state.state-loading #state-symbol {
+  display: none;
+}
+
+.empty-state.state-loading .loading-spinner {
+  display: block;
+  animation: spinner-turn 700ms linear infinite;
+}
+
+@keyframes spinner-turn {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .empty-state p {
@@ -388,6 +475,7 @@ h2 {
   *::before,
   *::after {
     scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
 }
